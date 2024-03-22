@@ -1,6 +1,7 @@
 # from youtubesearchpython import CustomSearch, VideoSortOrder
 from youtubesearchpython import VideosSearch, VideoSortOrder
 
+
 class SearchResult:
     def __init__(self, title, duration, link):
         self.title = title
