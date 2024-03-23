@@ -1,5 +1,5 @@
 # from youtubesearchpython import CustomSearch, VideoSortOrder
-from youtubesearchpython import VideosSearch, VideoSortOrder
+from youtubesearchpython import VideosSearch
 
 
 class SearchResult:
@@ -10,7 +10,7 @@ class SearchResult:
 
 
 class SearchYoutube:
-    prevPage = []
+
 
     def search(self, textToSerach: str) -> list[SearchResult]:
         srch = VideosSearch(textToSerach)
@@ -30,5 +30,5 @@ class SearchYoutube:
         return results_list
 
     def nextPage(self):
-        self.srch.next();
+        self.srch.next()
         return self.srch.result()

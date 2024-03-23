@@ -1,4 +1,4 @@
-import  curses
+from .os_compatibility import curses
 
 # configs.py
 default_config = {"music_file_location": "./mp3", "default_vol": 0.5}

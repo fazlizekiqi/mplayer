@@ -1,6 +1,5 @@
 import io
 import os
-import curses
 import tempfile
 import time
 from .search_youtube import SearchYoutube
@@ -8,6 +7,7 @@ from pytube import YouTube
 from pygame import mixer
 from moviepy.editor import AudioFileClip
 import threading
+from .os_compatibility import curses
 from .configs import default_config, init_curses_colors
 from .windows import WindowManager
 
@@ -53,7 +53,7 @@ def add_screen(stdscr):
 
 
 def play_music(manager, selected_music):
-    global current_state,music_is_playing
+    global current_state, music_is_playing
     download_and_convert_audio(selected_music)
     manager.clear()
     manager.refresh()
@@ -62,29 +62,22 @@ def play_music(manager, selected_music):
     player.music.load(file_path)
     player.music.set_volume(default_config["default_vol"])
 
-    player.music.play() # Set -1 to repeat the music
+    player.music.play()  # Set -1 to repeat the music
 
     music_is_playing = True
     thread = threading.Thread(target=listen, args=(manager,))
     thread.start()
 
-    manager.add_music_details(selected_music.title)
-    manager.add_music_player_instructions()
-    music_length = selected_music.duration
-
     while music_is_playing:
+        manager.add_music_details(selected_music.title)
+        manager.add_music_player_instructions()
+        music_length = selected_music.duration
 
         if player.music.get_busy():
             progress_seconds = player.music.get_pos() / 1000
             progress_minutes = int(progress_seconds // 60)
             seconds_left = int(progress_seconds % 60)
             manager.progress_bar(progress_seconds, progress_minutes, seconds_left, music_length)
-
-        if not player.music.get_busy():
-            manager.clear()
-            manager.addstr_with_xy(10, 10, "Music ended " + str(seconds_left), curses.color_pair(1))
-            current_state = State.GET_SELECTED_MUSIC
-            break
 
         manager.refresh()
         time.sleep(1)
@@ -112,8 +105,9 @@ def download_and_convert_audio(selected_music):
         file = os.path.join(default_config["music_file_location"], filename)
         audio_clip = AudioFileClip(temp_filename)
 
-        audio_clip.write_audiofile(file, verbose=True, logger=None)
-        print("Conversion successful!")
+        if not os.path.exists(file):
+            audio_clip.write_audiofile(file, verbose=True, logger=None)
+
     else:
         raise ValueError("No audio stream found!")
 
@@ -176,7 +170,7 @@ def listen(window_manager):
         if key == ord('p'):
             play_n_pause()
         elif key == ord('r'):
-            rewind()
+            rewind(window_manager)
         elif key == ord('s'):
             search_music()
         elif key == ord('b'):
@@ -228,9 +222,10 @@ def play_n_pause():
         player.music.unpause()
 
 
-def rewind():
+def rewind(window_manager):
     player.music.rewind()
     player.music.play(0, 00)
+
 
 
 def increase_vol():

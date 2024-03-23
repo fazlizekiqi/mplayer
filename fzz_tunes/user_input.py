@@ -1,6 +1,6 @@
 # user_input.py
-import curses
 import time
+from .os_compatibility import curses
 
 
 class UserInputHandler:

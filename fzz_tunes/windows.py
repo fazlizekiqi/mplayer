@@ -1,6 +1,6 @@
 # windows.py
-import curses
 import time
+from .os_compatibility import curses
 from curses.textpad import rectangle, Textbox
 
 

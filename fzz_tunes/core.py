@@ -1,10 +1,7 @@
 # core.py
 import os
 from pygame import mixer
-import threading
-import time
-import curses
-
+from .os_compatibility import curses
 from .configs import default_config
 
 
