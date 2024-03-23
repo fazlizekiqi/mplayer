@@ -178,7 +178,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-fzz_tunes/__pycache__/
+**/__pycache__/
+
 # C extensions
 *.so
 
