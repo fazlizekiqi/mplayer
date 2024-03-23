@@ -227,7 +227,6 @@ def rewind(window_manager):
     player.music.play(0, 00)
 
 
-
 def increase_vol():
     global player
     curr_vol = player.music.get_volume()
@@ -253,6 +252,8 @@ def main():
     ssl._create_default_https_context = ssl._create_stdlib_context
 
     location_ = default_config['music_file_location']
+    if not os.path.exists(location_):
+        os.makedirs(location_)
     for file in os.listdir(location_):
         file_path = os.path.join(location_, file)
         os.remove(file_path)
