@@ -32,3 +32,13 @@ This project is tested with 2 different python versions
 ### Run the app 
 
     poetry run main
+
+
+### The application is available for installation: 
+
+    pip install fzz-tunes 
+
+
+### After installation you could start the app with: 
+
+    fzz-tunes
