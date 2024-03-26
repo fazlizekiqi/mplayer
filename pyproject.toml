@@ -6,7 +6,8 @@ authors = ["fazlizekiqi <fazlizekiqi1@hotmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+youtube-search-python-proxy = { git = "git@github.com:mytja-archive/youtube-search-python-proxy.git", branch = "main" }
+python = "^3.11.1"
 youtube-search-python = "^1.6.6"
 pytube = "^15.0.0"
 pygame = "^2.5.2"
@@ -14,8 +15,7 @@ mutagen = "^1.47.0"
 spicy = "^0.16.0"
 ffmpeg-python = "^0.2.0"
 moviepy = "^1.0.3"
-windows-curses = {version = "^2.3.2", platform = "windows"}
-
+windows-curses = [{version = "^2.3.2", platform = "win32"}]
 
 [build-system]
 requires = ["poetry-core"]
